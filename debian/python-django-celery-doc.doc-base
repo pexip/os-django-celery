@@ -1,0 +1,11 @@
+Document: python-django-celery
+Title: Python Django Celery Documentation
+Author: Ask Solem
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/python-django-celery-doc/html/index.html
+Files: /usr/share/doc/python-django-celery-doc/html/*.html
+       /usr/share/doc/python-django-celery-doc/html/cookbook/*.html
+       /usr/share/doc/python-django-celery-doc/html/reference/*.html
+       /usr/share/doc/python-django-celery-doc/html/getting-started/*.html

@@ -1,0 +1,54 @@
+Description: Remove pretty-printing nose-cover3 from build.
+ nose-cover3 is not essential to the build-proccess and is not packaged
+ for Debian. Thus removing it from the sources.
+Author: Michael Fladischer <FladischerMichael@fladi.at>
+Forwarded: not-needed
+Last-Update: 2011-11-28
+
+Index: django-celery-3.1.10/tests/settings.py
+===================================================================
+--- django-celery-3.1.10.orig/tests/settings.py	2014-02-14 03:38:40.000000000 +1100
++++ django-celery-3.1.10/tests/settings.py	2014-05-02 11:58:45.806695419 +1000
+@@ -43,9 +43,6 @@
+ NOSE_ARGS = [
+     os.path.join(here, os.pardir, 'djcelery', 'tests'),
+     os.environ.get('NOSE_VERBOSE') and '--verbose' or '',
+-    '--cover3-package=djcelery',
+-    '--cover3-branch',
+-    '--cover3-exclude=%s' % ','.join(COVERAGE_EXCLUDE_MODULES),
+ ]
+ 
+ BROKER_URL = 'amqp://'
+Index: django-celery-3.1.10/requirements/test.txt
+===================================================================
+--- django-celery-3.1.10.orig/requirements/test.txt	2014-04-01 01:40:49.000000000 +1100
++++ django-celery-3.1.10/requirements/test.txt	2014-05-02 11:58:45.806695419 +1000
+@@ -1,7 +1,6 @@
+ unittest2>=0.4.0
+ coverage>=3.0
+ nose
+-nose-cover3
+ mock
+ django-nose
+ python-memcached
+Index: django-celery-3.1.10/setup.py
+===================================================================
+--- django-celery-3.1.10.orig/setup.py	2014-04-01 01:40:49.000000000 +1100
++++ django-celery-3.1.10/setup.py	2014-05-02 11:58:45.806695419 +1000
+@@ -146,16 +146,9 @@
+     def extra_args(self):
+         toxinidir = os.environ.get('TOXINIDIR', '')
+         return [
+-            '--with-coverage3',
+-            '--cover3-xml',
+-            '--cover3-xml-file=%s' % (
+-                os.path.join(toxinidir, 'coverage.xml'), ),
+             '--with-xunit',
+             '--xunit-file=%s' % (
+                 os.path.join(toxinidir, 'nosetests.xml'), ),
+-            '--cover3-html',
+-            '--cover3-html-dir=%s' % (
+-                os.path.join(toxinidir, 'cover'), ),
+         ]
+ 
+ 

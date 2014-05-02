@@ -1,0 +1,60 @@
+django-celery (3.1.10-1) unstable; urgency=low
+
+  * New upstream release (Closes: #742762).
+  * Remove python-billiard from build-depends. Appears to build ok without it.
+  * Refresh patches.
+
+ -- Brian May <bam@debian.org>  Fri, 02 May 2014 11:57:34 +1000
+
+django-celery (3.1.1-1) unstable; urgency=low
+
+  [ Jakub Wilk ]
+  * Use canonical URIs for Vcs-* fields.
+
+  [ Michael Fladischer ]
+  * New upstream release.
+  * Add python-anyjson and python-tz to Depends and Build-Depends.
+  * Add python-billiard to Build-Depends.
+  * Remove python-django-picklefield from Build-Depends and Depends as
+    upstream now includes its own implementation.
+  * Bump Standards version to 3.9.5.
+  * Bump Build-Depends on debhelper to >= 8.1.0 to satisfy build-arch
+    and build-indep targets.
+  * Bump dependency on celery to >= 3.1.1.
+  * Refresh patches.
+  * Remove trailing whitespaces from long description.
+  * Point DJANGO_SETTINGS_MODULE to the settings module provided by upstream
+    when building the documentation.
+  * Make Depends and Build-Depends on python-django unversioned as no version
+    prior thos the required one is available in the archives.
+  * Drop skip_tests.patch, no longer needed.
+  * Point homepage URL to http://celeryproject.org/.
+  * Format packaging files with `wrap-and-sort`.
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Mon, 27 Jan 2014 15:43:39 +0100
+
+django-celery (2.5.5-2) unstable; urgency=low
+
+  * Do not build issues by default, they need a network connection. Thanks to
+    Evgeni Golov for the patch! (Closes: #681379)
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Wed, 18 Jul 2012 10:14:52 +0200
+
+django-celery (2.5.5-1) unstable; urgency=low
+
+  * New upstream release.
+  * Modify PYTHONPATH for sphinx-build.
+  * Add patch to skip webhooks tests (Closes: #669473).
+  * Bump dependency on python-celery to (>= 2.5.2).
+  * Bump dependency on python-django-picklefield to (>= 0.2.0).
+  * Bump Standards-Version to 3.9.3.
+  * Update DEP-5 URL to 1.0.
+  * Update years in d/copyright.
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Wed, 30 May 2012 11:33:34 +0200
+
+django-celery (2.4.2-1) unstable; urgency=low
+
+  * Initial release (Closes: #588229)
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Tue, 27 Dec 2011 15:03:32 +0100

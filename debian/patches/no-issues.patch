@@ -1,0 +1,22 @@
+Description: Do not build issues if DEB_BUILD_ISSUES=disabled
+   Building the issues via sphinxcontrib.issuetracker requires
+   a network connection which is not available on Debian
+   buildds.
+Author: Evgeni Golov <evgeni@debian.org>
+Bug-Debian: http://bugs.debian.org/681379
+
+Index: django-celery-3.1.9/docs/conf.py
+===================================================================
+--- django-celery-3.1.9.orig/docs/conf.py	2014-01-23 07:31:21.000000000 +1100
++++ django-celery-3.1.9/docs/conf.py	2014-03-28 10:04:35.878599644 +1100
+@@ -81,6 +81,7 @@
+ }
+ 
+ ### Issuetracker
+-issuetracker = 'github'
+-issuetracker_project = 'celery/django-celery'
+-issuetracker_issue_pattern = r'[Ii]ssue #(\d+)'
++if os.environ.get("DEB_BUILD_ISSUES", False) != "disabled":
++    issuetracker = 'github'
++    issuetracker_project = 'celery/django-celery'
++    issuetracker_issue_pattern = r'[Ii]ssue #(\d+)'
