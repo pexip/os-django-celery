@@ -1,0 +1,20 @@
+Index: django-celery/djcelery/management/commands/celery.py
+===================================================================
+--- django-celery.orig/djcelery/management/commands/celery.py	2014-04-01 01:40:49.000000000 +1100
++++ django-celery/djcelery/management/commands/celery.py	2014-08-13 13:09:17.266026523 +1000
+@@ -11,15 +11,12 @@
+ class Command(CeleryCommand):
+     """The celery command."""
+     help = 'celery commands, see celery help'
+-    requires_model_validation = True
+     options = (CeleryCommand.options
+                + base.get_options()
+                + base.preload_options)
+ 
+     def run_from_argv(self, argv):
+         argv = self.handle_default_options(argv)
+-        if self.requires_model_validation:
+-            self.validate()
+         base.execute_from_commandline(
+             ['{0[0]} {0[1]}'.format(argv)] + argv[2:],
+         )
