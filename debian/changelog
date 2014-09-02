@@ -1,3 +1,16 @@
+django-celery (3.1.10-2pexip1) pexip; urgency=medium
+
+  * New upstream release.
+
+ -- John-Mark Bell <jmb@pexip.com>  Tue, 02 Sep 2014 21:50:35 +0100
+
+django-celery (3.1.10-2) unstable; urgency=medium
+
+  * Python3 package.
+  * Fix django1.7 compatibility issue (Closes: #755596).
+
+ -- Brian May <bam@debian.org>  Wed, 13 Aug 2014 14:48:09 +1000
+
 django-celery (3.1.10-1pexip1) pexip; urgency=low
 
   * Prepare Pexip packaging
@@ -7,7 +20,7 @@ django-celery (3.1.10-1pexip1) pexip; urgency=low
 django-celery (3.1.10-1) unstable; urgency=low
 
   * New upstream release (Closes: #742762).
-  * Remove python-billiard from build-depends. Appears to build ok without it.
+  * Remove python-billiard from build-depends.
   * Refresh patches.
 
  -- Brian May <bam@debian.org>  Fri, 02 May 2014 11:57:34 +1000
