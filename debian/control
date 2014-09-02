@@ -9,9 +9,9 @@ Build-Depends: debhelper (>= 8.1.0~), dh-python, docbook-to-man,
  python-all (>= 2.7), python-anyjson, python-celery (>= 3.1.1),
  python-django, python-django-nose, python-mock, python-setuptools,
  python-tz, python-unittest2,
- python3-all (>= 2.7), python3-anyjson, python3-celery (>= 3.1.1),
- python3-django, python3-django-nose, python3-mock, python3-setuptools,
- python3-tz
+# python3-all (>= 2.7), python3-anyjson, python3-celery (>= 3.1.1),
+# python3-django, python3-django-nose, python3-mock, python3-setuptools,
+# python3-tz
 Standards-Version: 3.9.5
 X-Python-Version: >= 2.7
 Homepage: http://celeryproject.org/
@@ -42,28 +42,28 @@ Description: Celery integration for Django
  like sending emails or batch-processing larger datasets to one or more
  separate worker nodes.
 
-Package: python3-django-celery
-Architecture: all
-Depends: python3-anyjson,
-         python3-celery (>= 3.1.1),
-         python3-django,
-         python3-pkg-resources,
-         python3-tz,
-         ${misc:Depends},
-         ${python3:Depends}
-Description: Celery integration for Django
- Celery is an open source asynchronous task queue/job queue based on
- distributed message passing. It is focused on real-time operation,
- but supports scheduling as well.
- .
- django-celery provides Celery integration for Django using the Django ORM and
- cache backend for storing results, autodiscovery of task modules for
- applications listed in INSTALLED_APPS, and integration of task monitoring
- through the Django admin interface.
- .
- Using it in a Django project provides a way to distribute asynchronous tasks
- like sending emails or batch-processing larger datasets to one or more
- separate worker nodes.
+#Package: python3-django-celery
+#Architecture: all
+#Depends: python3-anyjson,
+#         python3-celery (>= 3.1.1),
+#         python3-django,
+#         python3-pkg-resources,
+#         python3-tz,
+#         ${misc:Depends},
+#         ${python3:Depends}
+#Description: Celery integration for Django
+# Celery is an open source asynchronous task queue/job queue based on
+# distributed message passing. It is focused on real-time operation,
+# but supports scheduling as well.
+# .
+# django-celery provides Celery integration for Django using the Django ORM and
+# cache backend for storing results, autodiscovery of task modules for
+# applications listed in INSTALLED_APPS, and integration of task monitoring
+# through the Django admin interface.
+# .
+# Using it in a Django project provides a way to distribute asynchronous tasks
+# like sending emails or batch-processing larger datasets to one or more
+# separate worker nodes.
 
 
 Package: python-django-celery-doc
