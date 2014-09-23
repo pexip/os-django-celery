@@ -1,0 +1,59 @@
+Index: django-celery/djcelery/loaders.py
+===================================================================
+--- django-celery.orig/djcelery/loaders.py	2014-04-01 01:40:49.000000000 +1100
++++ django-celery/djcelery/loaders.py	2014-09-23 15:15:08.103390537 +1000
+@@ -175,8 +175,13 @@
+         return
+     _RACE_PROTECTION = True
+     try:
+-        return filter(None, [find_related_module(app, 'tasks')
+-                             for app in settings.INSTALLED_APPS])
++        if django.VERSION < (1, 7):
++            return filter(None, [find_related_module(app, 'tasks')
++                                 for app in settings.INSTALLED_APPS])
++        else:
++            from django.apps import apps
++            return filter(None, [find_related_module(app.name, 'tasks')
++                                 for app in apps.get_app_configs()])
+     finally:
+         _RACE_PROTECTION = False
+ 
+Index: django-celery/djcelery/tests/test_discovery.py
+===================================================================
+--- django-celery.orig/djcelery/tests/test_discovery.py	2014-02-12 05:13:33.000000000 +1100
++++ django-celery/djcelery/tests/test_discovery.py	2014-09-23 15:36:00.821526454 +1000
+@@ -2,6 +2,7 @@
+ 
+ import warnings
+ 
++import django
+ from django.conf import settings
+ 
+ from celery.registry import tasks
+@@ -25,11 +26,20 @@
+     def test_discovery_with_broken(self):
+         warnings.resetwarnings()
+         if 'someapp' in settings.INSTALLED_APPS:
+-            installed_apps = list(settings.INSTALLED_APPS)
+-            settings.INSTALLED_APPS = installed_apps + ['xxxnot.aexist']
+-            try:
++            if django.VERSION < (1, 7):
++                # Django < 1.7
++                installed_apps = list(settings.INSTALLED_APPS)
++                settings.INSTALLED_APPS = installed_apps + ['xxxnot.aexist']
++                try:
++                    # we should get a warning when loading xxxnot.aexist
++                    with warnings.catch_warnings(record=True) as log:
++                        autodiscover()
++                        self.assertTrue(log)
++                finally:
++                    settings.INSTALLED_APPS = installed_apps
++            else:
++                # Django 1.7
+                 with warnings.catch_warnings(record=True) as log:
++                    # we should not get any warnings
+                     autodiscover()
+-                    self.assertTrue(log)
+-            finally:
+-                settings.INSTALLED_APPS = installed_apps
++                    self.assertEqual(log, [])
