@@ -1,0 +1,52 @@
+From 7b213f6dde4c84c481dfcba9140b46d3e6d07a0d Mon Sep 17 00:00:00 2001
+From: Brian May <bam@debian.org>
+Date: Sat, 9 Jan 2016 18:17:18 +1100
+Subject: Fix caching with Django 1.9
+
+Somewhat ugly because we can't lookup a cache by it's backend anymore,
+however changing this would require potentially break compatability with
+existing applications.
+---
+ djcelery/backends/cache.py | 4 ++--
+ tests/settings.py          | 9 +++++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/djcelery/backends/cache.py b/djcelery/backends/cache.py
+index 40588bb..def97fd 100644
+--- a/djcelery/backends/cache.py
++++ b/djcelery/backends/cache.py
+@@ -5,7 +5,7 @@ from datetime import timedelta
+ 
+ import django
+ from django.utils.encoding import smart_str
+-from django.core.cache import cache, get_cache
++from django.core.cache import cache, caches
+ 
+ from celery import current_app
+ from celery.utils.timeutils import timedelta_seconds
+@@ -13,7 +13,7 @@ from celery.backends.base import KeyValueStoreBackend
+ 
+ # CELERY_CACHE_BACKEND overrides the django-global(tm) backend settings.
+ if current_app.conf.CELERY_CACHE_BACKEND:
+-    cache = get_cache(current_app.conf.CELERY_CACHE_BACKEND)  # noqa
++    cache = caches[current_app.conf.CELERY_CACHE_BACKEND]  # noqa
+ 
+ 
+ class DjangoMemcacheWrapper(object):
+diff --git a/tests/settings.py b/tests/settings.py
+index 9a52cb7..40123b9 100644
+--- a/tests/settings.py
++++ b/tests/settings.py
+@@ -85,3 +85,12 @@ CELERY_SEND_TASK_ERROR_EMAILS = False
+ 
+ USE_TZ = True
+ TIME_ZONE = 'UTC'
++
++CACHES = {
++    'default': {
++        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
++    },
++    'django.core.cache.backends.dummy.DummyCache': {
++        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
++    }
++}

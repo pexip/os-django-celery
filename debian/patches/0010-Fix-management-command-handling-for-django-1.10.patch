@@ -1,0 +1,46 @@
+From 06566a57ca296c8ac4eb59c7b386f4dca817b555 Mon Sep 17 00:00:00 2001
+From: Brian May <bam@debian.org>
+Date: Thu, 23 Feb 2017 07:52:29 +1100
+Subject: Fix management command handling for django >= 1.10
+
+Patch applied from upstream:
+https://patch-diff.githubusercontent.com/raw/celery/django-celery/pull/458.patch
+---
+ djcelery/management/base.py | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/djcelery/management/base.py b/djcelery/management/base.py
+index 11520f1..b3f386d 100644
+--- a/djcelery/management/base.py
++++ b/djcelery/management/base.py
+@@ -57,7 +57,29 @@ patch_thread_ident()
+ 
+ 
+ class CeleryCommand(BaseCommand):
+-    options = BaseCommand.option_list
++    options = ()
++    if hasattr(BaseCommand, 'option_list'):
++        options = BaseCommand.option_list
++    else:
++        def add_arguments(self, parser):
++            option_typemap = {
++                "string": str,
++                "int": int,
++                "float": float
++            }
++            for opt in self.option_list:
++                option = {k: v
++                          for k, v in opt.__dict__.items()
++                          if v is not None}
++                flags = (option.get("_long_opts", []) +
++                         option.get("_short_opts", []))
++                del option["_long_opts"]
++                del option["_short_opts"]
++                if "type" in option:
++                    opttype = option["type"]
++                    option["type"] = option_typemap.get(opttype, opttype)
++                parser.add_argument(*flags, **option)
++
+     skip_opts = ['--app', '--loader', '--config', '--no-color']
+     requires_model_validation = VALIDATE_MODELS
+     keep_base_opts = False

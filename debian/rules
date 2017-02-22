@@ -24,12 +24,8 @@ override_dh_compress:
 
 .PHONY: override_dh_auto_test
 override_dh_auto_test:
-ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
-	set -e; \
-	for python in $(shell pyversions -r); do \
-	  DEB_NETWORK_TESTS=disabled $$python setup.py test ; \
-	done
-endif
+	DEB_NETWORK_TESTS=disabled \
+	dh_auto_test -- --system=custom --test-args="{interpreter} setup.py test"
 
 .PHONY: override_dh_clean
 override_dh_clean:

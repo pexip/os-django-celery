@@ -51,12 +51,14 @@ djcelery/management/commands/celeryd_multi.py
 djcelery/management/commands/celerymon.py
 djcelery/management/commands/djcelerymon.py
 djcelery/migrations/0001_initial.py
-djcelery/migrations/0002_v25_changes.py
-djcelery/migrations/0003_v26_changes.py
-djcelery/migrations/0004_v30_changes.py
 djcelery/migrations/__init__.py
 djcelery/monproj/__init__.py
 djcelery/monproj/urls.py
+djcelery/south_migrations/0001_initial.py
+djcelery/south_migrations/0002_v25_changes.py
+djcelery/south_migrations/0003_v26_changes.py
+djcelery/south_migrations/0004_v30_changes.py
+djcelery/south_migrations/__init__.py
 djcelery/static/djcelery/style.css
 djcelery/templates/admin/djcelery/change_list.html
 djcelery/templates/djcelery/confirm_rate_limit.html

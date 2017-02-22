@@ -1,3 +1,65 @@
+django-celery (3.1.17-4) unstable; urgency=medium
+
+  * Add 0010-Fix-management-command-handling-for-django-1.10.patch to
+    fix management command. Closes: #855877.
+
+ -- Brian May <bam@debian.org>  Thu, 23 Feb 2017 08:10:49 +1100
+
+django-celery (3.1.17-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add Django 1.10 patches to fix FTBFS (Closes: #828642):
+    - 0008-django-1.10-fix-django.conf.urls.patterns-is-removed.patch
+    - 0009-django-1.10-fix-access-to-_default_manager.patch
+  * Standards-Version: 3.9.8 (no change).
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 02 Aug 2016 22:31:30 +0000
+
+django-celery (3.1.17-3) unstable; urgency=medium
+
+  * Apply patches for Django 1.9 compatibility. Closes: #809568.
+
+ -- Brian May <bam@debian.org>  Sat, 09 Jan 2016 18:24:58 +1100
+
+django-celery (3.1.17-2) unstable; urgency=medium
+
+  * Fix debian/watch file.
+  * Ensure Python 3 tests get executed. See #802839.
+
+ -- Brian May <bam@debian.org>  Mon, 26 Oct 2015 10:07:52 +1100
+
+django-celery (3.1.17-1) unstable; urgency=low
+
+  [ Michael Fladischer ]
+  * New upstream release.
+  * Refresh no-issues.patch.
+  * Bump debhelper compatibility and version to 9.
+  * Add missing X-Python3-Version field.
+
+  [ SVN-Git Migration ]
+  * git-dpm config
+  * Update Vcs fields for git migration
+
+ -- Michael Fladischer <fladi@debian.org>  Mon, 19 Oct 2015 08:55:46 +0200
+
+django-celery (3.1.16-2) unstable; urgency=low
+
+  * Bump Standards-Version to 3.9.6.
+  * Use pypi.debian.net service for uscan.
+  * Include upstream public PGP key 030A2708.
+  * Allow debian/upstream-signing-key.pgp to be included as a binary.
+  * Change my email address to fladi@debian.org.
+  * Drop versioned dependencies:
+    - python3-all
+    - python3-celery
+  * Reformat packaging files with cme for better readability.
+  * Add DEP3 header to fix_autodiscover.patch.
+  * Make description of the Python3 package unique.
+  * Add privacy.patch to disable useage of remote images in local
+    documentation.
+
+ -- Michael Fladischer <fladi@debian.org>  Tue, 07 Jul 2015 19:25:16 +0200
+
 django-celery (3.1.16-1) unstable; urgency=medium
 
   * New upstream version.

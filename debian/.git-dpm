@@ -1,0 +1,11 @@
+# see git-dpm(1) from git-dpm package
+06566a57ca296c8ac4eb59c7b386f4dca817b555
+06566a57ca296c8ac4eb59c7b386f4dca817b555
+58751dd4216a267ccad1f8b5932487c51af036e4
+58751dd4216a267ccad1f8b5932487c51af036e4
+django-celery_3.1.17.orig.tar.gz
+64ca723de395f66decb5563e037c094ed723e45b
+79615
+debianTag="debian/%e%v"
+patchedTag="patched/%e%v"
+upstreamTag="upstream/%e%u"
