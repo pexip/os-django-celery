@@ -3,7 +3,7 @@
 export PYBUILD_NAME=django-celery
 
 %:
-	dh $@ --with python2,sphinxdoc  --buildsystem=pybuild
+	dh $@ --with python2,python3,sphinxdoc  --buildsystem=pybuild
 
 .PHONY: override_dh_installman
 override_dh_installman:
