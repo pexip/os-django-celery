@@ -1,12 +1,13 @@
 from __future__ import absolute_import, unicode_literals
 
 from datetime import timedelta, datetime
-from time import time, mktime
+from time import time, mktime, gmtime
 
 from django.core.exceptions import MultipleObjectsReturned, ValidationError
 from django.db import models
 from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from celery import schedules
 from celery import states
@@ -16,10 +17,12 @@ from celery.utils.timeutils import timedelta_seconds
 from . import managers
 from .picklefield import PickledObjectField
 from .utils import now
+from .compat import python_2_unicode_compatible
 
 TASK_STATE_CHOICES = zip(states.ALL_STATES, states.ALL_STATES)
 
 
+@python_2_unicode_compatible
 class TaskMeta(models.Model):
     """Task result/status."""
     task_id = models.CharField(_('task id'), max_length=255, unique=True)
@@ -52,10 +55,11 @@ class TaskMeta(models.Model):
                 'traceback': self.traceback,
                 'children': (self.meta or {}).get('children')}
 
-    def __unicode__(self):
+    def __str__(self):
         return '<Task: {0.task_id} state={0.status}>'.format(self)
 
 
+@python_2_unicode_compatible
 class TaskSetMeta(models.Model):
     """TaskSet result"""
     taskset_id = models.CharField(_('group id'), max_length=255, unique=True)
@@ -76,7 +80,7 @@ class TaskSetMeta(models.Model):
                 'result': self.result,
                 'date_done': self.date_done}
 
-    def __unicode__(self):
+    def __str__(self):
         return '<TaskSet: {0.taskset_id}>'.format(self)
 
 
@@ -87,6 +91,7 @@ PERIOD_CHOICES = (('days', _('Days')),
                   ('microseconds', _('Microseconds')))
 
 
+@python_2_unicode_compatible
 class IntervalSchedule(models.Model):
     every = models.IntegerField(_('every'), null=False)
     period = models.CharField(
@@ -113,7 +118,7 @@ class IntervalSchedule(models.Model):
             cls.objects.filter(every=every, period=period).delete()
             return cls(every=every, period=period)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.every == 1:
             return _('every {0.period_singular}').format(self)
         return _('every {0.every} {0.period}').format(self)
@@ -123,6 +128,7 @@ class IntervalSchedule(models.Model):
         return self.period[:-1]
 
 
+@python_2_unicode_compatible
 class CrontabSchedule(models.Model):
     minute = models.CharField(_('minute'), max_length=64, default='*')
     hour = models.CharField(_('hour'), max_length=64, default='*')
@@ -142,7 +148,7 @@ class CrontabSchedule(models.Model):
         ordering = ['month_of_year', 'day_of_month',
                     'day_of_week', 'hour', 'minute']
 
-    def __unicode__(self):
+    def __str__(self):
         rfield = lambda f: f and str(f).replace(' ', '') or '*'
         return '{0} {1} {2} {3} {4} (m/h/d/dM/MY)'.format(
             rfield(self.minute), rfield(self.hour), rfield(self.day_of_week),
@@ -193,6 +199,7 @@ class PeriodicTasks(models.Model):
             pass
 
 
+@python_2_unicode_compatible
 class PeriodicTask(models.Model):
     name = models.CharField(
         _('name'), max_length=200, unique=True,
@@ -265,7 +272,7 @@ class PeriodicTask(models.Model):
             self.last_run_at = None
         super(PeriodicTask, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         fmt = '{0.name}: {{no schedule}}'
         if self.interval:
             fmt = '{0.name}: {0.interval}'
@@ -298,7 +305,7 @@ class WorkerState(models.Model):
         get_latest_by = 'last_heartbeat'
         ordering = ['-last_heartbeat']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.hostname
 
     def __repr__(self):
@@ -306,7 +313,9 @@ class WorkerState(models.Model):
 
     def is_alive(self):
         if self.last_heartbeat:
-            return time() < heartbeat_expires(self.heartbeat_timestamp)
+            # Use UTC timestamp if USE_TZ is true, or else use local timestamp
+            timestamp = mktime(gmtime()) if settings.USE_TZ else time()
+            return timestamp < heartbeat_expires(self.heartbeat_timestamp)
         return False
 
     @property
@@ -314,6 +323,7 @@ class WorkerState(models.Model):
         return mktime(self.last_heartbeat.timetuple())
 
 
+@python_2_unicode_compatible
 class TaskState(models.Model):
     state = models.CharField(
         _('state'), max_length=64, choices=TASK_STATE_CHOICES, db_index=True,
@@ -359,7 +369,7 @@ class TaskState(models.Model):
             )))
         super(TaskState, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         name = self.name or 'UNKNOWN'
         s = '{0.state:<10} {0.task_id:<36} {1}'.format(self, name)
         if self.eta:

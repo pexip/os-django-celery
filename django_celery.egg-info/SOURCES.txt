@@ -21,6 +21,7 @@ djcelery/admin.py
 djcelery/admin_utils.py
 djcelery/app.py
 djcelery/common.py
+djcelery/compat.py
 djcelery/db.py
 djcelery/humanize.py
 djcelery/loaders.py
@@ -97,6 +98,7 @@ docs/reference/djcelery.app.rst
 docs/reference/djcelery.backends.cache.rst
 docs/reference/djcelery.backends.database.rst
 docs/reference/djcelery.common.rst
+docs/reference/djcelery.compat.rst
 docs/reference/djcelery.contrib.test_runner.rst
 docs/reference/djcelery.db.rst
 docs/reference/djcelery.humanize.rst
