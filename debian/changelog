@@ -1,3 +1,18 @@
+django-celery (3.1.16-1pexip1) pexip; urgency=medium
+
+  * New upstream release.
+
+ -- John-Mark Bell <jmb@pexip.com>  Thu, 12 Apr 2017 18:29:36 +0100
+
+django-celery (3.1.16-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Fix autodiscover issue with Django 1.7.
+    Reported upstream as
+    https://github.com/celery/django-celery/issues/343
+
+ -- Brian May <bam@debian.org>  Tue, 23 Sep 2014 15:15:28 +1000
+
 django-celery (3.1.10-2pexip2) pexip; urgency=medium
 
   * Reinstate python3 support
