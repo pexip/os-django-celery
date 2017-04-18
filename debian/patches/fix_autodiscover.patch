@@ -1,8 +1,21 @@
-Index: django-celery/djcelery/loaders.py
-===================================================================
---- django-celery.orig/djcelery/loaders.py	2014-04-01 01:40:49.000000000 +1100
-+++ django-celery/djcelery/loaders.py	2014-09-23 15:15:08.103390537 +1000
-@@ -175,8 +175,13 @@
+From f0efa969284b71245f1640d8e2687b58a5bec51d Mon Sep 17 00:00:00 2001
+From: Brian May <bam@debian.org>
+Date: Thu, 8 Oct 2015 08:50:27 -0700
+Subject: Fix_autodiscover for Django 1.7
+
+Bug-Vendor: https://github.com/celery/django-celery/issues/343
+Last-Update: 2014-04-01
+Patch-Name: fix_autodiscover.patch
+---
+ djcelery/loaders.py              |  9 +++++++--
+ djcelery/tests/test_discovery.py | 22 ++++++++++++++++------
+ 2 files changed, 23 insertions(+), 8 deletions(-)
+
+diff --git a/djcelery/loaders.py b/djcelery/loaders.py
+index df0a668..c86455a 100644
+--- a/djcelery/loaders.py
++++ b/djcelery/loaders.py
+@@ -175,8 +175,13 @@ def autodiscover():
          return
      _RACE_PROTECTION = True
      try:
@@ -18,11 +31,11 @@ Index: django-celery/djcelery/loaders.py
      finally:
          _RACE_PROTECTION = False
  
-Index: django-celery/djcelery/tests/test_discovery.py
-===================================================================
---- django-celery.orig/djcelery/tests/test_discovery.py	2014-02-12 05:13:33.000000000 +1100
-+++ django-celery/djcelery/tests/test_discovery.py	2014-09-23 15:36:00.821526454 +1000
-@@ -2,6 +2,7 @@
+diff --git a/djcelery/tests/test_discovery.py b/djcelery/tests/test_discovery.py
+index 22ebb4e..3b17d6c 100644
+--- a/djcelery/tests/test_discovery.py
++++ b/djcelery/tests/test_discovery.py
+@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
  
  import warnings
  
@@ -30,7 +43,7 @@ Index: django-celery/djcelery/tests/test_discovery.py
  from django.conf import settings
  
  from celery.registry import tasks
-@@ -25,11 +26,20 @@
+@@ -25,11 +26,20 @@ class TestDiscovery(unittest.TestCase):
      def test_discovery_with_broken(self):
          warnings.resetwarnings()
          if 'someapp' in settings.INSTALLED_APPS:

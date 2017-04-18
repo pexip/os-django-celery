@@ -1,28 +1,23 @@
-Description: Remove pretty-printing nose-cover3 from build.
+From 8623ba181ad7bfcf6b82b8353ef2b20328b9076d Mon Sep 17 00:00:00 2001
+From: Michael Fladischer <fladi@debian.org>
+Date: Thu, 8 Oct 2015 08:50:25 -0700
+Subject: Remove pretty-printing nose-cover3 from build.
+
  nose-cover3 is not essential to the build-proccess and is not packaged
  for Debian. Thus removing it from the sources.
-Author: Michael Fladischer <FladischerMichael@fladi.at>
 Forwarded: not-needed
 Last-Update: 2011-11-28
+Patch-Name: fix_dependencies.patch
+---
+ requirements/test.txt | 1 -
+ setup.py              | 7 -------
+ tests/settings.py     | 3 ---
+ 3 files changed, 11 deletions(-)
 
-Index: django-celery-3.1.10/tests/settings.py
-===================================================================
---- django-celery-3.1.10.orig/tests/settings.py	2014-02-14 03:38:40.000000000 +1100
-+++ django-celery-3.1.10/tests/settings.py	2014-05-02 11:58:45.806695419 +1000
-@@ -43,9 +43,6 @@
- NOSE_ARGS = [
-     os.path.join(here, os.pardir, 'djcelery', 'tests'),
-     os.environ.get('NOSE_VERBOSE') and '--verbose' or '',
--    '--cover3-package=djcelery',
--    '--cover3-branch',
--    '--cover3-exclude=%s' % ','.join(COVERAGE_EXCLUDE_MODULES),
- ]
- 
- BROKER_URL = 'amqp://'
-Index: django-celery-3.1.10/requirements/test.txt
-===================================================================
---- django-celery-3.1.10.orig/requirements/test.txt	2014-04-01 01:40:49.000000000 +1100
-+++ django-celery-3.1.10/requirements/test.txt	2014-05-02 11:58:45.806695419 +1000
+diff --git a/requirements/test.txt b/requirements/test.txt
+index 9e63952..f2e10a0 100644
+--- a/requirements/test.txt
++++ b/requirements/test.txt
 @@ -1,7 +1,6 @@
  unittest2>=0.4.0
  coverage>=3.0
@@ -31,11 +26,11 @@ Index: django-celery-3.1.10/requirements/test.txt
  mock
  django-nose
  python-memcached
-Index: django-celery-3.1.10/setup.py
-===================================================================
---- django-celery-3.1.10.orig/setup.py	2014-04-01 01:40:49.000000000 +1100
-+++ django-celery-3.1.10/setup.py	2014-05-02 11:58:45.806695419 +1000
-@@ -146,16 +146,9 @@
+diff --git a/setup.py b/setup.py
+index 31ca26c..ce02fb7 100755
+--- a/setup.py
++++ b/setup.py
+@@ -147,16 +147,9 @@ class CIRunTests(RunTests):
      def extra_args(self):
          toxinidir = os.environ.get('TOXINIDIR', '')
          return [
@@ -52,3 +47,17 @@ Index: django-celery-3.1.10/setup.py
          ]
  
  
+diff --git a/tests/settings.py b/tests/settings.py
+index 73b5d2e..9a52cb7 100644
+--- a/tests/settings.py
++++ b/tests/settings.py
+@@ -43,9 +43,6 @@ COVERAGE_EXCLUDE_MODULES = (
+ NOSE_ARGS = [
+     os.path.join(here, os.pardir, 'djcelery', 'tests'),
+     os.environ.get('NOSE_VERBOSE') and '--verbose' or '',
+-    '--cover3-package=djcelery',
+-    '--cover3-branch',
+-    '--cover3-exclude=%s' % ','.join(COVERAGE_EXCLUDE_MODULES),
+ ]
+ 
+ BROKER_URL = 'amqp://'

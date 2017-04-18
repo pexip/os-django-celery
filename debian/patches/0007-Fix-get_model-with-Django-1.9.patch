@@ -1,0 +1,29 @@
+From b1488a7aaa79825d44219d52c104011bc100d81f Mon Sep 17 00:00:00 2001
+From: Brian May <bam@debian.org>
+Date: Sat, 9 Jan 2016 18:21:35 +1100
+Subject: Fix get_model with Django 1.9
+
+---
+ tests/someapp/tasks.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/someapp/tasks.py b/tests/someapp/tasks.py
+index ed480b4..1c519dd 100644
+--- a/tests/someapp/tasks.py
++++ b/tests/someapp/tasks.py
+@@ -1,6 +1,6 @@
+ from celery.task import task
+ 
+-from django.db.models import get_model
++from django.apps import apps
+ 
+ 
+ @task(name='c.unittest.SomeAppTask')
+@@ -10,6 +10,6 @@ def SomeAppTask(**kwargs):
+ 
+ @task(name='c.unittest.SomeModelTask')
+ def SomeModelTask(pk):
+-    model = get_model('someapp', 'Thing')
++    model = apps.get_model('someapp', 'Thing')
+     thing = model.objects.get(pk=pk)
+     return thing.name

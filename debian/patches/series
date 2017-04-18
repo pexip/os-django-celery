@@ -1,3 +1,10 @@
 fix_dependencies.patch
 no-issues.patch
 fix_autodiscover.patch
+privacy.patch
+0005-Fix-python3-issues.patch
+0006-Fix-caching-with-Django-1.9.patch
+0007-Fix-get_model-with-Django-1.9.patch
+0008-django-1.10-fix-django.conf.urls.patterns-is-removed.patch
+0009-django-1.10-fix-access-to-_default_manager.patch
+0010-Fix-management-command-handling-for-django-1.10.patch

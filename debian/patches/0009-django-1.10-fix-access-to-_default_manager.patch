@@ -1,0 +1,22 @@
+From 39098cc288ef5f15f9f52a83339a5d3bc59ba6cd Mon Sep 17 00:00:00 2001
+From: Thomas Goirand <zigo@debian.org>
+Date: Mon, 8 Aug 2016 08:52:08 +0000
+Subject: django 1.10: fix access to _default_manager
+
+---
+ djcelery/schedulers.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/djcelery/schedulers.py b/djcelery/schedulers.py
+index c937743..acbc0dd 100644
+--- a/djcelery/schedulers.py
++++ b/djcelery/schedulers.py
+@@ -95,7 +95,7 @@ class ModelEntry(ScheduleEntry):
+     def save(self):
+         # Object may not be synchronized, so only
+         # change the fields we care about.
+-        obj = self.model._default_manager.get(pk=self.model.pk)
++        obj = self.model._meta.default_manager.get(pk=self.model.pk)
+         for field in self.save_fields:
+             setattr(obj, field, getattr(self.model, field))
+         obj.last_run_at = make_aware(obj.last_run_at)

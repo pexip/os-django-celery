@@ -1,22 +1,38 @@
 Source: django-celery
-Section: python
-Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
-XSBC-Pexip-Original-Uploaders: Michael Fladischer <FladischerMichael@fladi.at>, Brian May <bam@debian.org>
-Build-Depends: debhelper (>= 8.1.0~), dh-python, docbook-to-man,
- python-sphinx (>= 1.0.7+dfsg), python-sphinxcontrib.issuetracker,
- python-all (>= 2.7), python-anyjson, python-celery (>= 3.1.1),
- python-django, python-django-nose, python-mock, python-setuptools,
- python-tz, python-unittest2,
- python3-all (>= 2.7), python3-anyjson, python3-celery (>= 3.1.1),
- python3-django, python3-django-nose, python3-mock, python3-setuptools,
- python3-tz
-Standards-Version: 3.9.5
-X-Python-Version: >= 2.7
+XSBC-Pexip-Original-Uploaders: Michael Fladischer <fladi@debian.org>,
+           Brian May <bam@debian.org>
+Section: python
+Priority: optional
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               docbook-to-man,
+               python-all (>= 2.7),
+               python-anyjson,
+               python-celery (>= 3.1.1),
+               python-django,
+               python-django-nose,
+               python-mock,
+               python-setuptools,
+               python-sphinx (>= 1.0.7+dfsg),
+               python-sphinxcontrib.issuetracker,
+               python-tz,
+               python-unittest2,
+               python3-all,
+               python3-anyjson,
+               python3-celery,
+               python3-django,
+               python3-django-nose,
+               python3-mock,
+               python3-setuptools,
+               python3-tz
+Standards-Version: 3.9.8
+Vcs-Browser: https://anonscm.debian.org/cgit/python-modules/packages/django-celery.git
+Vcs-Git: https://anonscm.debian.org/git/python-modules/packages/django-celery.git
 Homepage: http://celeryproject.org/
-Vcs-Svn: svn://anonscm.debian.org/python-modules/packages/django-celery/trunk/
-Vcs-Browser: http://anonscm.debian.org/viewvc/python-modules/packages/django-celery/trunk/
+X-Python-Version: >= 2.7
+X-Python3-Version: >= 3.3
 XS-Pexip-Upstream: http://ftp.debian.org/debian/ stretch
 
 Package: python-django-celery
@@ -45,13 +61,13 @@ Description: Celery integration for Django
 Package: python3-django-celery
 Architecture: all
 Depends: python3-anyjson,
-         python3-celery (>= 3.1.1),
+         python3-celery,
          python3-django,
          python3-pkg-resources,
          python3-tz,
          ${misc:Depends},
          ${python3:Depends}
-Description: Celery integration for Django
+Description: Celery integration for Django (Python3 version)
  Celery is an open source asynchronous task queue/job queue based on
  distributed message passing. It is focused on real-time operation,
  but supports scheduling as well.
@@ -64,12 +80,14 @@ Description: Celery integration for Django
  Using it in a Django project provides a way to distribute asynchronous tasks
  like sending emails or batch-processing larger datasets to one or more
  separate worker nodes.
-
+ .
+ This package contains the Python 3 version of the library.
 
 Package: python-django-celery-doc
-Section: doc
 Architecture: all
-Depends: ${misc:Depends}, ${sphinxdoc:Depends}
+Section: doc
+Depends: ${misc:Depends},
+         ${sphinxdoc:Depends}
 Description: Celery integration for Django (Documentation)
  Celery is an open source asynchronous task queue/job queue based on
  distributed message passing. It is focused on real-time operation,
